@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Adivinanza</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #game-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+    }
+
+    #guess-input {
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    #hint {
+      color: #555;
+      margin-top: 5px;
+    }
+
+    #attempts {
+      margin-top: 15px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    
+
+   
+  </style>
+</head>
+<body>
+
+  <div id="game-container">
+    <h2>Adivina el Número</h2>
+    <p>Introduce un número entre 1 y 100:</p>
+
+    <input type="number" id="guess-input" min="1" max="100">
+    <button onclick="guessNumber()">Adivinar</button>
+
+    <p id="result"></p>
+    <p id="hint"></p>
+    <p id="attempts"></p>
+
+    <button onclick="restartGame()">Reiniciar Juego</button>
+    <br>
+    <br>
+    <Button onclick="location.href='reloj.html'">Ir al reloj!</Button>
+    <Button onclick="location.href='formulario-limpio/index.html'">Ir al formulario!</Button>
+  </div>
+
+  <script>
+    let randomNumber;
+    let attempts;
+
+    function startGame() {
+      // Generar un número aleatorio entre 1 y 100 al iniciar el juego
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("hint").innerHTML = "";
+      document.getElementById("attempts").innerHTML = "";
+    }
+
+    function guessNumber() {
+      // Obtener el valor introducido por el usuario
+      const userGuess = document.getElementById("guess-input").value;
+
+      // Incrementar el número de intentos
+      attempts++;
+
+      // Comprobar si la adivinanza es correcta
+      if (userGuess == randomNumber) {
+        document.getElementById("result").innerHTML = `¡Correcto! Has adivinado el número en ${attempts} intentos.`;
+        document.getElementById("hint").innerHTML = "";
+      } else {
+        // Proporcionar pistas sobre si el número es mayor o menor
+        document.getElementById("result").innerHTML = "Incorrecto.";
+        document.getElementById("hint").innerHTML = userGuess < randomNumber ? "Intenta con un número mayor." : "Intenta con un número menor.";
+      }
+
+      // Mostrar el número de intentos
+      document.getElementById("attempts").innerHTML = `Intentos: ${attempts}`;
+    }
+
+    function restartGame() {
+      // Reiniciar el juego
+      startGame();
+      document.getElementById("guess-input").value = "";
+    }
+
+    // Iniciar el juego al cargar la página
+    startGame();
+  </script>
+
+</body>
+</html>
+

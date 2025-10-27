@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reloj Real</title>
+  <style>
+    body {
+      font-family: 'Lora', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #e0d7c6;
+      color: #4a4a4a;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #clock {
+      font-size: 4em;
+      color: #333;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      cursor: pointer;
+      font-size: 1.2em;
+      color: #7f8c8d;
+      border: none;
+      background: none;
+      text-decoration: none;
+      outline: none;
+      transition: color 0.3s;
+    }
+
+    button:hover {
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="clock"></div>
+
+    <div class="buttons">
+      <button onclick="toggleFormat()">Cambiar Formato</button>
+      <button onclick="location.href='index.html'">Ir al juego!</button>
+      <button onclick="location.href='formulario-limpio/index.html'">Ir al formulario!</button>
+    </div>
+  </div>
+
+  <script>
+    let is12HourFormat = true;
+
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+
+      if (is12HourFormat) {
+        let period = 'AM';
+        if (hours > 12) {
+          hours -= 12;
+          period = 'PM';
+        }
+        hours = hours === 0 ? 12 : hours;
+        document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds} ${period}`;
+      } else {
+        document.getElementById('clock').textContent = `${hours.toString().padStart(2, '0')}:${minutes}:${seconds}`;
+      }
+    }
+
+    function toggleFormat() {
+      is12HourFormat = !is12HourFormat;
+      updateClock();
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+
+</body>
+</html>
